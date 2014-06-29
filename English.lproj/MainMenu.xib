@@ -15,6 +15,7 @@
         <customObject id="206" userLabel="Controller" customClass="Controller">
             <connections>
                 <outlet property="calendarDate" destination="wX2-w5-Cms" id="yRl-Vu-OfX"/>
+                <outlet property="includeWeekends" destination="tP7-kH-pNF" id="RZn-bj-bgu"/>
                 <outlet property="menu" destination="207" id="210"/>
                 <outlet property="prefsWin" destination="yEf-hp-Adk" id="ciL-Dd-vQT"/>
                 <outlet property="projectName" destination="UXJ-Ea-iTO" id="CWm-3N-b2t"/>
@@ -40,14 +41,14 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="yEf-hp-Adk">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="-998" y="790" width="261" height="228"/>
+            <rect key="contentRect" x="-998" y="790" width="275" height="253"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1178"/>
             <view key="contentView" id="Llt-FO-5xz">
-                <rect key="frame" x="0.0" y="0.0" width="261" height="228"/>
+                <rect key="frame" x="0.0" y="0.0" width="275" height="253"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <datePicker verticalHuggingPriority="750" id="wX2-w5-Cms">
-                        <rect key="frame" x="102" y="20" width="139" height="148"/>
+                        <rect key="frame" x="116" y="20" width="139" height="148"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="clockAndCalendar" id="mbz-MK-QUr">
                             <font key="font" metaFont="system"/>
@@ -62,7 +63,7 @@
                         </connections>
                     </datePicker>
                     <textField verticalHuggingPriority="750" id="UXJ-Ea-iTO">
-                        <rect key="frame" x="102" y="186" width="139" height="22"/>
+                        <rect key="frame" x="116" y="211" width="139" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="My Project" drawsBackground="YES" id="v7w-Y8-yeX">
                             <font key="font" metaFont="system"/>
@@ -75,16 +76,16 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="YiF-nd-auB">
-                        <rect key="frame" x="23" y="188" width="73" height="17"/>
+                        <rect key="frame" x="18" y="213" width="92" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Task:" id="vhZ-nM-3gv">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Project Name:" id="vhZ-nM-3gv">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ttC-s9-MsR">
-                        <rect key="frame" x="23" y="114" width="73" height="54"/>
+                        <rect key="frame" x="43" y="151" width="67" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Due Date:" id="gC5-AZ-apu">
                             <font key="font" metaFont="system"/>
@@ -92,6 +93,17 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button id="tP7-kH-pNF">
+                        <rect key="frame" x="114" y="182" width="148" height="18"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="check" title="Include Weekends" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6Cg-WC-kl3">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setSettings:" target="206" id="m1R-p4-Nf7"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
         </window>

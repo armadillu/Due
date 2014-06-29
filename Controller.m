@@ -1,5 +1,15 @@
 #import "Controller.h"
 
+
+BOOL isWeekday(NSDate * date){
+	int day = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:date] weekday];
+	const int kSunday = 1;
+	const int kSaturday = 7;
+	BOOL isWeekdayResult = day != kSunday && day != kSaturday;
+	return isWeekdayResult;
+}
+
+
 @implementation Controller
 
 -(void)awakeFromNib{
@@ -50,6 +60,11 @@
 		[calendarDate setDateValue:restoredDate];
 	}
 
+	if([def objectForKey:@"includeWeekends"]){
+		int state = [[NSUserDefaults standardUserDefaults] integerForKey:@"includeWeekends"];
+		[includeWeekends setState:state];
+	}
+
 	_statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
 	[_statusItem setHighlightMode:YES];
 	[_statusItem setEnabled:YES];
@@ -67,7 +82,9 @@
 - (IBAction)setSettings:(id)sender;{
 	[[NSUserDefaults standardUserDefaults] setObject:[calendarDate dateValue] forKey:@"dueDate"];
 	[[NSUserDefaults standardUserDefaults] setObject:[projectName stringValue] forKey:@"projectName"];
+	[[NSUserDefaults standardUserDefaults] setInteger: [includeWeekends state] forKey:@"includeWeekends"];
 	[[NSUserDefaults standardUserDefaults] synchronize];
+	[self refresh:nil];
 }
 
 
@@ -87,18 +104,47 @@
 
 	NSDateComponents *  dateComp = [self daysBetweenDate:[NSDate date] andDate:[calendarDate dateValue]];
 	NSInteger days = [dateComp day];
-	//NSInteger hours = [dateComp hour]%24;
+	int businessDays = days; //if we count weekends, then days behave same as businessdays
+	BOOL b_includeWeekends = [includeWeekends state];
+	if (!b_includeWeekends){
+		//calc how many "week days" we have from now to target date
+		NSDate * indexDate = [NSDate date];
+		businessDays = isWeekday(indexDate) ? 0 : 1; //count target date regardless
+		for(int i = 0; i< days; i++){
+			BOOL isWorkDay = isWeekday(indexDate);
+			if(isWorkDay) businessDays++;
+			indexDate = [indexDate dateByAddingTimeInterval: 60 * 60 * 24];
+		}
 
+	}
+
+	//NSLog(@"days: %d  workDays: %d", days, businessDays);
 	NSString * projectString = [NSString stringWithFormat:@"%@", [projectName stringValue]];
 	NSString * timeString;
 
-	if (days==0){
+	if (days == 0){
 		timeString = [NSString stringWithFormat:@"due today!"];
 	}else{
 		if (days==1){
-			timeString = [NSString stringWithFormat:@"due tomorrow!"];
+			if (b_includeWeekends){
+				timeString = [NSString stringWithFormat:@"due tomorrow!"];
+			}else{
+				int todayday = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit fromDate:[NSDate date]] weekday];
+				const int kSunday = 1;
+				const int kSaturday = 7;
+				bool isWeekend = (todayday == kSaturday || todayday == kSunday);
+				if ( isWeekend){
+					timeString = [NSString stringWithFormat:@"due next workday!"];
+				}else{
+					timeString = [NSString stringWithFormat:@"due tomorrow!"];
+				}
+			}
 		}else{
-			timeString = [NSString stringWithFormat:@"%d days left", (int)days];
+			if (businessDays == 1){
+				timeString = [NSString stringWithFormat:@"%d work day left", (int)businessDays];
+			}else{
+				timeString = [NSString stringWithFormat:@"%d work days left", (int)businessDays];
+			}
 		}
 	}
 
@@ -164,7 +210,8 @@
 	switch ([sender tag]) {
 	case 2: //settings
 		[prefsWin makeKeyAndOrderFront:self];
-		[prefsWin setLevel:NSNormalWindowLevel + 1];
+		[NSApp activateIgnoringOtherApps:YES];
+		//[prefsWin setLevel:NSNormalWindowLevel + 1];
 		break;
 
 	case 1: //quit

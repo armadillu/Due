@@ -11,6 +11,7 @@
 	IBOutlet NSWindow * prefsWin;
 	IBOutlet NSDatePicker* calendarDate;
 	IBOutlet NSTextField* projectName;
+	IBOutlet NSButton* includeWeekends;
 	
 	NSStatusItem*	_statusItem;
 	NSTimer *		timer;
