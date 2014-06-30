@@ -141,9 +141,9 @@ BOOL isWeekday(NSDate * date){
 			}
 		}else{
 			if (businessDays == 1){
-				timeString = [NSString stringWithFormat:@"%d work day left", (int)businessDays];
+				timeString = [NSString stringWithFormat:@"%d day left", (int)businessDays];
 			}else{
-				timeString = [NSString stringWithFormat:@"%d work days left", (int)businessDays];
+				timeString = [NSString stringWithFormat:@"%d days left", (int)businessDays];
 			}
 		}
 	}
