@@ -96,7 +96,7 @@
                     <button id="tP7-kH-pNF">
                         <rect key="frame" x="114" y="182" width="148" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="check" title="Include Weekends" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6Cg-WC-kl3">
+                        <buttonCell key="cell" type="check" title="Include Weekends" bezelStyle="regularSquare" imagePosition="left" inset="2" id="6Cg-WC-kl3">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
